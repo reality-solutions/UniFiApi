@@ -84,6 +84,25 @@ namespace KoenZomers.UniFi.Api
         #region Methods
 
         /// <summary>
+        /// Allows setting the SiteId after the instance has been created
+        /// </summary>
+        /// <param name="siteId"></param>
+        public async Task<bool> SetSiteId(string siteId)
+        {
+            // Check if the site exists
+            var sites = await GetSites();
+            if (sites.Find(s => s.Name == siteId) == null)
+            {
+                return false;
+            }
+            else
+            {
+                SiteId = siteId;
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Disables SSL certificate validation in case of using a self signed SSL certificate
         /// </summary>
         public void DisableSslValidation()
